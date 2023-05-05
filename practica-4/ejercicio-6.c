@@ -2,44 +2,89 @@
 #include <stdlib.h>
 #include <string.h>
 
-//
-
 struct l
 {
   struct l *siguiente;
   int dato;
-}
+};
 
-typedef struct l listaEnteros;
+typedef struct l nodo;
 
-listaEnteros *iniciarLista(int dato);
-void eliminarLista(listaEnteros **);
-void agregarInicio(listaEnteros **);
-void agregarFinal(listaEnteros *);
-int cantidadElementos(listaEnteros *);
-void imprimirLista(listaEnteros *);
+void iniciarLista(nodo **);
+void agregarInicio(nodo **, int dato);
+void imprimirLista(nodo *);
+void agregarFinal(nodo **, int dato);
+int cantidad_elementos(nodo *lista);
 
 int main()
 {
-  listaEnteros *lista = iniciarLista();
-
+  nodo *lista; // defino la lista
+  iniciarLista(&lista);
+  agregarInicio(&lista, 1);
+  agregarInicio(&lista, 4);
+  agregarInicio(&lista, 8);
+  // lista -> 8 -> 4 -> 1
+  imprimirLista(lista);
+  int cantidad;
+  cantidad = cantidad_elementos(lista);
+  printf("%cantidad de elementos: %d\n", cantidad);
+  imprimirLista(lista);
   return 0;
 }
 
-listaEnteros *iniciarLista()
+void iniciarLista(nodo **lista)
 {
-  listaEnteros *primero = NULL;
-  return primero;
+  *lista = NULL;
 }
 
-void agregarInicio(listaEnteros **lista, int dato)
+void agregarInicio(nodo **lista, int dato)
 {
-  listaEnteros nuevo =
+  nodo *nuevo;
+  nuevo = (nodo *)malloc(sizeof(nodo));
+  nuevo->siguiente = *lista;
+  nuevo->dato = dato;
+  *lista = nuevo;
 }
 
-void eliminarLista(listaEnteros **lista)
+void imprimirLista(nodo *lista)
 {
-  if (*lista.siguiente != NULL)
-    eliminarLista(*lista.siguiente);
-  free(*lista);
+  while (lista != NULL)
+  {
+    printf("%d -> ", lista->dato);
+    lista = lista->siguiente;
+  }
+  printf("NULL\n");
+}
+
+// **lista es el nodo
+// *lista es el puntero
+// TODO preguntar por que pierdo el puntero al primer dato
+void agregarFinal(nodo **lista, int dato)
+{
+  printf("dato lista: %d\n", (*lista)->dato);
+  nodo *aux;
+  aux = *lista;
+  while (aux->siguiente != NULL)
+  {
+    printf("dato: %d\n", aux->dato);
+    *aux = *aux->siguiente;
+  }
+  nodo *nuevo;
+  nuevo = (nodo *)malloc(sizeof(nodo));
+  nuevo->siguiente = NULL;
+  nuevo->dato = dato;
+  aux->siguiente = nuevo;
+}
+
+// TODO preguntar por que tampoco funciona
+int cantidad_elementos(nodo *lista)
+{
+  int cantidad = 0;
+  while (lista != NULL)
+  {
+    printf("dato: \n", lista->dato);
+    lista = lista->siguiente;
+    cantidad++;
+  }
+  return cantidad;
 }
