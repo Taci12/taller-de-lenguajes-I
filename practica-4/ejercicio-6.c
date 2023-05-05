@@ -27,7 +27,9 @@ int main()
   imprimirLista(lista);
   int cantidad;
   cantidad = cantidad_elementos(lista);
-  printf("%cantidad de elementos: %d\n", cantidad);
+  agregarFinal(&lista, 9);
+  // lista -> 8 -> 4 -> 1 -> 9
+  printf("cantidad de elementos: %d\n", cantidad);
   imprimirLista(lista);
   return 0;
 }
@@ -58,7 +60,6 @@ void imprimirLista(nodo *lista)
 
 // **lista es el nodo
 // *lista es el puntero
-// TODO preguntar por que pierdo el puntero al primer dato
 void agregarFinal(nodo **lista, int dato)
 {
   printf("dato lista: %d\n", (*lista)->dato);
@@ -67,7 +68,7 @@ void agregarFinal(nodo **lista, int dato)
   while (aux->siguiente != NULL)
   {
     printf("dato: %d\n", aux->dato);
-    *aux = *aux->siguiente;
+    aux = aux->siguiente;
   }
   nodo *nuevo;
   nuevo = (nodo *)malloc(sizeof(nodo));
@@ -76,7 +77,6 @@ void agregarFinal(nodo **lista, int dato)
   aux->siguiente = nuevo;
 }
 
-// TODO preguntar por que tampoco funciona
 int cantidad_elementos(nodo *lista)
 {
   int cantidad = 0;
