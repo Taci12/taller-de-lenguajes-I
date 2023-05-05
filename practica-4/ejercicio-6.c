@@ -64,19 +64,23 @@ void imprimirLista(nodo *lista)
 // *lista es el puntero
 void agregarFinal(nodo **lista, int dato)
 {
-  printf("dato lista: %d\n", (*lista)->dato);
-  nodo *aux;
-  aux = *lista;
-  while (aux->siguiente != NULL)
+  if (*lista == NULL)
+    agregarInicio(lista, dato);
+  else
   {
-    printf("dato: %d\n", aux->dato);
-    aux = aux->siguiente;
+    nodo *aux;
+    aux = *lista;
+    while (aux->siguiente != NULL)
+    {
+      printf("dato: %d\n", aux->dato);
+      aux = aux->siguiente;
+    }
+    nodo *nuevo;
+    nuevo = (nodo *)malloc(sizeof(nodo));
+    nuevo->siguiente = NULL;
+    nuevo->dato = dato;
+    aux->siguiente = nuevo;
   }
-  nodo *nuevo;
-  nuevo = (nodo *)malloc(sizeof(nodo));
-  nuevo->siguiente = NULL;
-  nuevo->dato = dato;
-  aux->siguiente = nuevo;
 }
 
 int cantidad_elementos(nodo *lista)
