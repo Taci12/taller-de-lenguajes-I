@@ -31,6 +31,8 @@ int main()
   // lista -> 8 -> 4 -> 1 -> 9
   printf("cantidad de elementos: %d\n", cantidad);
   imprimirLista(lista);
+  eliminarLista(&lista);
+  imprimirLista(lista);
   return 0;
 }
 
@@ -82,9 +84,19 @@ int cantidad_elementos(nodo *lista)
   int cantidad = 0;
   while (lista != NULL)
   {
-    printf("dato: \n", lista->dato);
     lista = lista->siguiente;
     cantidad++;
   }
   return cantidad;
+}
+
+void eliminarLista(nodo **lista)
+{
+  nodo *aux;
+  while (*lista != NULL)
+  {
+    aux = *lista;
+    *lista = (*lista)->siguiente;
+    free(aux);
+  }
 }
