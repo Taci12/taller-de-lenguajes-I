@@ -30,28 +30,44 @@ int main()
     numero = leerInt();
   }
   imprimirLista(lista);
-  nodo *listaInvertida;
-  listaInvertida = invertirLista(lista);
+  numero = leerInt();
+  eliminarMultiplos(&lista, numero);
   imprimirLista(lista);
-  imprimirLista(listaInvertida);
-  printf("cantidad lista: %d\n", cantidad_elementos(lista));
-  printf("cantidad lista invertida: %d\n", cantidad_elementos(listaInvertida));
-  free(lista);
-  free(listaInvertida);
   return 0;
 }
 
-nodo *invertirLista(nodo *lista)
+void eliminarMultiplos(nodo **lista, int numero)
 {
-  nodo *listaInvertida;
-  listaInvertida = (nodo *)malloc(sizeof(nodo));
-  iniciarLista(&listaInvertida);
-  while (lista != NULL)
+  nodo *actual;
+  actual = *lista;
+  nodo *anterior;
+  anterior = actual;
+  nodo *aux;
+  while (actual != NULL)
   {
-    agregarInicio(&listaInvertida, lista->dato);
-    lista = lista->siguiente;
+    if ((actual->dato % numero) == 0)
+    {
+      if (actual == anterior)
+      {
+        *lista = actual->siguiente; // avanzo una posicion
+        free(actual);
+        actual = *lista;
+        anterior = actual;
+      }
+      else
+      {
+        aux = actual;
+        actual = actual->siguiente;
+        anterior->siguiente = actual;
+        free(aux);
+      }
+    }
+    else
+    {
+      anterior = actual;
+      actual = actual->siguiente;
+    }
   }
-  return listaInvertida;
 }
 
 int leerInt()
