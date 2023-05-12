@@ -4,6 +4,7 @@
 
 int **iniciar_matriz(int dim);
 void imprimir_matriz(int **matriz, int dim);
+int *eliminar_matriz(int ***matriz, int dim);
 
 int main()
 {
@@ -13,6 +14,8 @@ int main()
   scanf("%d", &dim);
   matriz = iniciar_matriz(dim);
   imprimir_matriz(matriz, dim);
+  matriz = eliminar_matriz(&matriz, dim);
+  // printf("%d", matriz == NULL);
   return 0;
 }
 
@@ -43,4 +46,13 @@ void imprimir_matriz(int **matriz, int dim)
       printf("%d ", matriz[i][j]);
     printf("\n");
   }
+}
+
+int *eliminar_matriz(int ***matriz, int dim)
+{
+  int i, j;
+  for (i = 0; i < dim; i++)
+    free((*matriz)[i]);
+  free(*matriz);
+  return NULL;
 }
