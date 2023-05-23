@@ -27,10 +27,10 @@ int main()
     return -1;
   }
   FILE *resultados;
-  resultados = fopen("../textos/resultados.txt", "w");
+  resultados = fopen("../textos/resultados.csv", "w");
   if (!resultados)
   {
-    printf("error al crear resultados.txt");
+    printf("error al crear resultados.csv");
     return -1;
   }
   char linea[DIM];
@@ -98,11 +98,12 @@ void procesar_fila(float *fila_actual, caracteristicas *vector, int *filas)
   int i;
   for (i = 0; i < 8; i++, fila_actual++, vector++)
   {
-    vector->promedio += *fila_actual;
+    printf("Fila actual: %.2f\n", *fila_actual);
+    vector->promedio += (*fila_actual);
     if (*fila_actual < vector->minimo)
-      vector->minimo = *fila_actual;
+      vector->minimo = (*fila_actual);
     if (*fila_actual > vector->maximo)
-      vector->maximo = *fila_actual;
+      vector->maximo = (*fila_actual);
   }
   *filas += 1;
 }
@@ -111,20 +112,20 @@ void obtener_promedios(caracteristicas *vector, int *filas)
 {
   int i;
   for (i = 0; i < 8; i++, vector++)
-    vector->promedio /= *filas;
+    vector->promedio /= (*filas);
 }
 
 void imprimir_valores(caracteristicas *vector, FILE *resultados)
 {
   int i;
   fprintf(resultados, "Promedio;");
-  for (i = 0; i < 8; i++, vector++)
-    fprintf(resultados, "%.2f;", vector->promedio);
+  for (i = 0; i < 8; i++)
+    fprintf(resultados, "%.2f;", vector[i].promedio);
   fprintf(resultados, "\nMaximo;");
-  for (i = 0; i < 8; i++, vector++)
-    fprintf(resultados, "%.2f;", vector->maximo);
+  for (i = 0; i < 8; i++)
+    fprintf(resultados, "%.2f;", vector[i].maximo);
   fprintf(resultados, "\nMinimo;");
-  for (i = 0; i < 8; i++, vector++)
-    fprintf(resultados, "%.2f;", vector->minimo);
+  for (i = 0; i < 8; i++)
+    fprintf(resultados, "%.2f;", vector[i].minimo);
   fprintf(resultados, "\n");
 }
