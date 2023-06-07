@@ -1,0 +1,55 @@
+1. Indique qué imprime el siguiente código
+
+#include <stdio.h>
+#include <string.h>
+void cambioSTR(char *);
+int main()
+{ char * linea = malloc(100);
+ strcpy(linea, "Caso posible"); // linea = "caso posible"
+ printf("Linea = %s\n", linea+5); // "Linea = posible"
+ cambioSTR(linea); // la string vuelve apuntando a un dato indeterminado
+ strcpy(linea+8, linea+11); // copia basura
+ printf("Linea = %s\n", linea); // imprime basura.
+ return 0;
+}
+
+void cambioSTR(char * L){
+ free(L);
+ L = malloc(200);
+ strcpy(L, "Nuevo ");
+ strcat(L, "texto");
+ printf("L = %s\n", L); // "L = Nuevo texto"
+}
+
+2. Indique qué imprime el código siguiente:
+#include <stdio.h>
+#define MOSTRAR 0
+int main()
+{ int i;
+ for (i=10; i>5; i--) {
+ #ifdef MOSTRAR
+ printf("%d ",i);
+ #undef MOSTRAR
+ #else
+ #define MOSTRAR 0
+ #endif
+ }
+ return(0);
+} 
+// imprime 10, 9, 8, 7, 6
+
+3. 
+#define ESPAR(x) (!((x) % 2))
+#define nPares(x, y) (ESPAR(x) + ESPAR(y))
+
+4. 
+  a. falso, los punteros ocupan la misma memoria.
+  b. verdadero
+  c. 0010 XOR 0101 = 0111 = 7, verdadero
+  d. falso, si ya existe el archivo el w+ borra el contenido 
+  e. falso, el w+ borra el contenido
+  f. falso, si no existe lo crea
+  g. verdadero
+  h. falso, el modo "a" no permite lectura ni fseek
+  i. falso, permite saber si ya nos pasamos de la marca de final
+  j. verdadero. 
